@@ -26,6 +26,7 @@ export default function CreateForm(props) {
         className="form-control"
         value={value}
         onChange={handleChange}
+        maxLength="280"
       />
       <div>
         <input className="btn btn-success" type="submit" value="Ок" />
