@@ -2,22 +2,23 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import CreateForm from "./Create-form";
 import { DEFAULT_TASKS } from "../shared/Default-tasks";
+import Task from "../models/task-model";
 
 export default function TaskManager() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [addition, setAddition] = useState(false);
 
-  useEffect(() => {
+  useEffect((): void => {
     const item = localStorage.getItem("task-manager");
-    const savedTasks = item ? JSON.parse(item) : DEFAULT_TASKS;
+    const savedTasks: Task[] = item ? JSON.parse(item) : DEFAULT_TASKS;
     setTasks(savedTasks);
   }, []);
 
-  useEffect(() => {
+  useEffect((): void => {
     localStorage.setItem("task-manager", JSON.stringify(tasks));
   }, [tasks]);
 
-  const setCompletion = (value) => {
+  const setCompletion = (value: boolean): void => {
     const newTasks = tasks.map((task) => {
       if (task.selected) {
         task.completed = value;
@@ -28,19 +29,19 @@ export default function TaskManager() {
     setTasks(newTasks);
   };
 
-  const completeTasks = () => {
+  const completeTasks = (): void => {
     setCompletion(true);
   };
 
-  const restoreTasks = () => {
+  const restoreTasks = (): void => {
     setCompletion(false);
   };
 
-  const removeTasks = () => {
+  const removeTasks = (): void => {
     setTasks(tasks.filter((task) => task.completed || !task.selected));
   };
 
-  const toggleTaskSelection = (id) => {
+  const toggleTaskSelection = (id: number): void => {
     setTasks(
       tasks.map((task) =>
         task.id === id ? { ...task, selected: !task.selected } : task
@@ -48,7 +49,7 @@ export default function TaskManager() {
     );
   };
 
-  const createTask = (value) => {
+  const createTask = (value: string): void => {
     if (value) {
       const maxID = Math.max(...tasks.map((task) => task.id));
       const newTask = {
@@ -62,11 +63,11 @@ export default function TaskManager() {
     }
   };
 
-  const toggleAddition = () => {
+  const toggleAddition = (): void => {
     setAddition(!addition);
   };
 
-  const closeAddition = () => {
+  const closeAddition = (): void => {
     setAddition(false);
   };
 
@@ -119,6 +120,7 @@ export default function TaskManager() {
         <Card
           header="Завершенные задачи"
           tasks={completedTasks}
+          createForm={null}
           selectItem={toggleTaskSelection}
         >
           <button

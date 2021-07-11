@@ -1,4 +1,6 @@
-export const DEFAULT_TASKS = [
+import Task from "../models/task-model";
+
+export const DEFAULT_TASKS: Task[] = [
   {
     id: 1,
     value: "Task 1",

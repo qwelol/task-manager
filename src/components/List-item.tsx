@@ -1,4 +1,6 @@
-export default function ListItem(props) {
+import ListItemProps from "../models/list-item-props";
+
+export default function ListItem(props: ListItemProps) {
   return (
     <li className="list-group-item">
       <label className="form-check">
